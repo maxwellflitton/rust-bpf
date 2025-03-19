@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  aya-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aya-dev
+    volumes:
+      - ./test-tracing:/workspace
+    working_dir: /workspace
+    stdin_open: true
+    tty: true

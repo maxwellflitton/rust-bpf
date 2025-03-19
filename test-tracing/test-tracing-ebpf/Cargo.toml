@@ -1,0 +1,23 @@
+[package]
+name = "test-tracing-ebpf"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+test-tracing-common = { path = "../test-tracing-common" }
+
+aya-ebpf = { workspace = true }
+aya-log-ebpf = { workspace = true }
+
+[build-dependencies]
+which = { workspace = true }
+
+[[bin]]
+name = "test-tracing"
+path = "src/main.rs"
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
