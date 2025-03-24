@@ -34,14 +34,14 @@ async fn main() -> anyhow::Result<()> {
     // reach for `Bpf::load_file` instead.
     let mut ebpf = aya::Ebpf::load(aya::include_bytes_aligned!(concat!(
         env!("OUT_DIR"),
-        "/test-tracing"
+        "/packet-tracer"
     )))?;
     if let Err(e) = aya_log::EbpfLogger::init(&mut ebpf) {
         // This can happen if you remove all log statements from your eBPF program.
         warn!("failed to initialize eBPF logger: {}", e);
     }
     let Opt { iface } = opt;
-    let program: &mut Xdp = ebpf.program_mut("test_tracing").unwrap().try_into()?;
+    let program: &mut Xdp = ebpf.program_mut("packet_tracer").unwrap().try_into()?;
     program.load()?;
     program.attach(&iface, XdpFlags::default())
         .context("failed to attach the XDP program with default flags - try changing XdpFlags::default() to XdpFlags::SKB_MODE")?;

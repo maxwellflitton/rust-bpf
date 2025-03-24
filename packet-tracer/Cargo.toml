@@ -1,10 +1,10 @@
 [package]
-name = "test-tracing"
+name = "packet-tracer"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-test-tracing-common = { path = "../test-tracing-common", features = ["user"] }
+packet-tracer-common = { path = "../packet-tracer-common", features = ["user"] }
 
 anyhow = { workspace = true, default-features = true }
 aya = { workspace = true }
@@ -30,8 +30,8 @@ aya-build = { workspace = true }
 # Finally note that *any* usage of `artifact = ...` in *any* Cargo.toml in the workspace breaks
 # workflows with stable cargo; stable cargo outright refuses to load manifests that use unstable
 # features.
-test-tracing-ebpf = { path = "../test-tracing-ebpf" }
+packet-tracer-ebpf = { path = "../packet-tracer-ebpf" }
 
 [[bin]]
-name = "test-tracing"
+name = "packet-tracer"
 path = "src/main.rs"

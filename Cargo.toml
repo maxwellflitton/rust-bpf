@@ -1,7 +1,13 @@
 [workspace]
 resolver = "2"
-members = ["test-tracing", "test-tracing-common", "test-tracing-ebpf"]
-default-members = ["test-tracing", "test-tracing-common"]
+members = [
+    "packet-tracer", 
+    "packet-tracer-common", 
+    "packet-tracer-ebpf", 
+    "test-tcp", 
+    "test-tcp-client"
+]
+default-members = ["packet-tracer", "packet-tracer-common"]
 
 [workspace.dependencies]
 aya = { version = "0.13.1", default-features = false }
@@ -21,6 +27,6 @@ log = { version = "0.4.22", default-features = false }
 tokio = { version = "1.40.0", default-features = false }
 which = { version = "6.0.0", default-features = false }
 
-[profile.release.package.test-tracing-ebpf]
+[profile.release.package.packet-tracer-ebpf]
 debug = 2
 codegen-units = 1

@@ -1,11 +1,11 @@
 [package]
-name = "test-tracing-ebpf"
+name = "packet-tracer-ebpf"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-test-tracing-common = { path = "../test-tracing-common" }
-
+packet-tracer-common = { path = "../packet-tracer-common" }
+network-types = "0.0.7"
 aya-ebpf = { workspace = true }
 aya-log-ebpf = { workspace = true }
 
@@ -13,11 +13,5 @@ aya-log-ebpf = { workspace = true }
 which = { workspace = true }
 
 [[bin]]
-name = "test-tracing"
+name = "packet-tracer"
 path = "src/main.rs"
-
-[profile.dev]
-panic = "abort"
-
-[profile.release]
-panic = "abort"

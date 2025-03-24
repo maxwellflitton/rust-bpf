@@ -1,8 +1,0 @@
-[build]
-target = "bpfel-unknown-none"
-
-[target.bpfel-unknown-none]
-rustflags = ["-C", "panic=abort"]
-
-[unstable]
-build-std = ["core"]
