@@ -5,7 +5,10 @@ members = [
     "packet-tracer-common", 
     "packet-tracer-ebpf", 
     "test-tcp", 
-    "test-tcp-client"
+    "test-tcp-client",
+    "probe-tracer", 
+    "probe-tracer-common",
+    "probe-tracer-ebpf"
 ]
 default-members = ["packet-tracer", "packet-tracer-common"]
 

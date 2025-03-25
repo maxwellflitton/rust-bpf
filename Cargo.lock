@@ -524,6 +524,39 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3b3cff922bd51709b605d9ead9aa71031d81447142d828eb4a6eba76fe619f9b"
 
 [[package]]
+name = "probe-tracer"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "aya",
+ "aya-build",
+ "aya-log",
+ "env_logger",
+ "libc",
+ "log",
+ "probe-tracer-common",
+ "probe-tracer-ebpf",
+ "tokio",
+]
+
+[[package]]
+name = "probe-tracer-common"
+version = "0.1.0"
+dependencies = [
+ "aya",
+]
+
+[[package]]
+name = "probe-tracer-ebpf"
+version = "0.1.0"
+dependencies = [
+ "aya-ebpf",
+ "aya-log-ebpf",
+ "probe-tracer-common",
+ "which",
+]
+
+[[package]]
 name = "proc-macro-error"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
