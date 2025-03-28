@@ -4,7 +4,7 @@
 use aya_ebpf::{
     bindings::xdp_action, 
     macros::{xdp, map}, 
-    programs::{XdpContext, ProbeContext},
+    programs::XdpContext,
     maps::PerCpuArray,
 };
 use aya_log_ebpf::info;

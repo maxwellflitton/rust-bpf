@@ -1,0 +1,18 @@
+[package]
+name = "socket-tracing-ebpf"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+socket-tracing-common = { path = "../socket-tracing-common" }
+network-types = "0.0.7"
+
+aya-ebpf = { workspace = true }
+aya-log-ebpf = { workspace = true }
+
+[build-dependencies]
+which = { workspace = true }
+
+[[bin]]
+name = "socket-tracing"
+path = "src/main.rs"

@@ -8,7 +8,10 @@ members = [
     "test-tcp-client",
     "probe-tracer", 
     "probe-tracer-common",
-    "probe-tracer-ebpf"
+    "probe-tracer-ebpf",
+    "cache/socket-tracing/socket-tracing",
+    "cache/socket-tracing/socket-tracing-common",
+    "cache/socket-tracing/socket-tracing-ebpf"
 ]
 default-members = ["packet-tracer", "packet-tracer-common"]
 
@@ -31,5 +34,9 @@ tokio = { version = "1.40.0", default-features = false }
 which = { version = "6.0.0", default-features = false }
 
 [profile.release.package.packet-tracer-ebpf]
+debug = 2
+codegen-units = 1
+
+[profile.release.package.socket-tracing-ebpf]
 debug = 2
 codegen-units = 1

@@ -62,3 +62,11 @@ if [[ " $@ " =~ " run-wifi-listener " ]]; then
 else
   echo "No run-tcp argument detected."
 fi
+
+if [[ " $@ " =~ " run-local-listener " ]]; then
+  echo "Running run-docker-listener commands..."
+  cd cache/socket-tracing/socket-tracing
+  RUST_LOG=info cargo run --config 'target."cfg(all())".runner="sudo -E"'
+else
+  echo "No run-tcp argument detected."
+fi
