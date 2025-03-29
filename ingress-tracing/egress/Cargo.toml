@@ -1,19 +1,7 @@
 [workspace]
 resolver = "2"
-members = [
-    "ebpf/packet-tracer", 
-    "ebpf/packet-tracer-common", 
-    "ebpf/packet-tracer-ebpf", 
-    "test-tcp", 
-    "test-tcp-client",
-    "ingress-tracing/egress/egress",
-    "ingress-tracing/egress/egress-common",
-    "ingress-tracing/egress/egress-ebpf",
-    "ingress-tracing/ingress/ingress",
-    "ingress-tracing/ingress/ingress-common",
-    "ingress-tracing/ingress/ingress-ebpf",
-    "ingress-tracing/ingress/testing-harness"
-]
+members = ["egress", "egress-common", "egress-ebpf"]
+default-members = ["egress", "egress-common"]
 
 [workspace.dependencies]
 aya = { version = "0.13.1", default-features = false }
@@ -32,14 +20,6 @@ libc = { version = "0.2.159", default-features = false }
 log = { version = "0.4.22", default-features = false }
 tokio = { version = "1.40.0", default-features = false }
 which = { version = "6.0.0", default-features = false }
-
-[profile.release.package.packet-tracer-ebpf]
-debug = 2
-codegen-units = 1
-
-[profile.release.package.ingress-ebpf]
-debug = 2
-codegen-units = 1
 
 [profile.release.package.egress-ebpf]
 debug = 2

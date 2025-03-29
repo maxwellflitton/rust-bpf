@@ -1,0 +1,17 @@
+[package]
+name = "egress-ebpf"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+egress-common = { path = "../egress-common" }
+
+aya-ebpf = { workspace = true }
+aya-log-ebpf = { workspace = true }
+
+[build-dependencies]
+which = { workspace = true }
+
+[[bin]]
+name = "egress"
+path = "src/main.rs"

@@ -1,0 +1,17 @@
+[package]
+name = "traffic-tracing-ebpf"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+traffic-tracing-common = { path = "../traffic-tracing-common" }
+
+aya-ebpf = { workspace = true }
+aya-log-ebpf = { workspace = true }
+
+[build-dependencies]
+which = { workspace = true }
+
+[[bin]]
+name = "traffic-tracing"
+path = "src/main.rs"
