@@ -6,13 +6,9 @@ members = [
     "ebpf/packet-tracer-ebpf", 
     "test-tcp", 
     "test-tcp-client",
-    "ingress-tracing/egress/egress",
-    "ingress-tracing/egress/egress-common",
-    "ingress-tracing/egress/egress-ebpf",
-    "ingress-tracing/ingress/ingress",
-    "ingress-tracing/ingress/ingress-common",
-    "ingress-tracing/ingress/ingress-ebpf",
-    "ingress-tracing/ingress/testing-harness"
+    "ingress-tracing/ingress",
+    "ingress-tracing/kernel",
+    "ingress-tracing/ingress-ebpf"
 ]
 
 [workspace.dependencies]

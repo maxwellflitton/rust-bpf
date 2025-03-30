@@ -1,11 +1,11 @@
 [package]
-name = "egress-ebpf"
+name = "ingress-ebpf"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-egress-common = { path = "../egress-common" }
-
+kernel = { path = "../kernel" }
+network-types = "0.0.7"
 aya-ebpf = { workspace = true }
 aya-log-ebpf = { workspace = true }
 
@@ -13,5 +13,5 @@ aya-log-ebpf = { workspace = true }
 which = { workspace = true }
 
 [[bin]]
-name = "egress"
+name = "ingress"
 path = "src/main.rs"

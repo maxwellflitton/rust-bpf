@@ -59,15 +59,7 @@ fi
 
 if [[ " $@ " =~ " run-wifi-listener-ingress " ]]; then
   echo "Running run-docker-listener-ingress commands..."
-  cd ingress/ingress
-  RUST_LOG=info cargo run --config 'target."cfg(all())".runner="sudo -E"' --   --iface wlp0s20f3
-else
-  echo "No run-tcp argument detected."
-fi
-
-if [[ " $@ " =~ " run-wifi-listener-egress " ]]; then
-  echo "Running run-docker-listener-egress commands..."
-  cd egress/egress
+  cd ingress
   RUST_LOG=info cargo run --config 'target."cfg(all())".runner="sudo -E"' --   --iface wlp0s20f3
 else
   echo "No run-tcp argument detected."

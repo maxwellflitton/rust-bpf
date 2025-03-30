@@ -300,40 +300,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "egress"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "aya",
- "aya-build",
- "aya-log",
- "clap",
- "egress-common",
- "egress-ebpf",
- "env_logger",
- "libc",
- "log",
- "tokio",
-]
-
-[[package]]
-name = "egress-common"
-version = "0.1.0"
-dependencies = [
- "aya",
-]
-
-[[package]]
-name = "egress-ebpf"
-version = "0.1.0"
-dependencies = [
- "aya-ebpf",
- "aya-log-ebpf",
- "egress-common",
- "which",
-]
-
-[[package]]
 name = "either"
 version = "1.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -432,18 +398,11 @@ dependencies = [
  "aya-log",
  "clap",
  "env_logger",
- "ingress-common",
  "ingress-ebpf",
+ "kernel",
  "libc",
  "log",
  "tokio",
-]
-
-[[package]]
-name = "ingress-common"
-version = "0.1.0"
-dependencies = [
- "aya",
 ]
 
 [[package]]
@@ -452,7 +411,7 @@ version = "0.1.0"
 dependencies = [
  "aya-ebpf",
  "aya-log-ebpf",
- "ingress-common",
+ "kernel",
  "network-types",
  "which",
 ]
@@ -462,6 +421,13 @@ name = "itoa"
 version = "1.0.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4a5f13b858c8d314ee3e8f639011f7ccefe71f97f96e50151fb991f267928e2c"
+
+[[package]]
+name = "kernel"
+version = "0.1.0"
+dependencies = [
+ "aya",
+]
 
 [[package]]
 name = "libc"
@@ -741,10 +707,6 @@ version = "0.1.0"
 
 [[package]]
 name = "test-tcp-client"
-version = "0.1.0"
-
-[[package]]
-name = "testing-harness"
 version = "0.1.0"
 
 [[package]]

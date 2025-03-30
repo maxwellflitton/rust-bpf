@@ -1,26 +1,37 @@
-[workspace]
-resolver = "2"
-members = ["ingress", "ingress-common", "ingress-ebpf", "testing-harness"]
-default-members = ["ingress", "ingress-common"]
+[package]
+name = "ingress"
+version = "0.1.0"
+edition = "2021"
 
-[workspace.dependencies]
-aya = { version = "0.13.1", default-features = false }
-aya-build = { version = "0.1.2", default-features = false }
-aya-ebpf = { version = "0.1.1", default-features = false }
-aya-log = { version = "0.2.1", default-features = false }
-aya-log-ebpf = { version = "0.1.1", default-features = false }
+[dependencies]
+kernel = { path = "../kernel", features = ["user"] }
 
-anyhow = { version = "1", default-features = false }
-# `std` feature is currently required to build `clap`.
+anyhow = { workspace = true, default-features = true }
+aya = { workspace = true }
+aya-log = { workspace = true }
+env_logger = { workspace = true }
+libc = { workspace = true }
+log = { workspace = true }
+tokio = { workspace = true, features = ["macros", "rt", "rt-multi-thread", "net", "signal"] }
+
+clap = { workspace = true, features = ["derive"] }
+[build-dependencies]
+anyhow = { workspace = true }
+aya-build = { workspace = true }
+# TODO(https://github.com/rust-lang/cargo/issues/12375): this should be an artifact dependency, but
+# it's not possible to tell cargo to use `-Z build-std` to build it. We cargo-in-cargo in the build
+# script to build this, but we want to teach cargo about the dependecy so that cache invalidation
+# works properly.
 #
-# See https://github.com/clap-rs/clap/blob/61f5ee5/clap_builder/src/lib.rs#L15.
-clap = { version = "4.5.20", default-features = false, features = ["std"] }
-env_logger = { version = "0.11.5", default-features = false }
-libc = { version = "0.2.159", default-features = false }
-log = { version = "0.4.22", default-features = false }
-tokio = { version = "1.40.0", default-features = false }
-which = { version = "6.0.0", default-features = false }
+# Note also that https://github.com/rust-lang/cargo/issues/10593 occurs when `target = ...` is added
+# to an artifact dependency; it seems possible to work around that by setting `resolver = "1"` in
+# Cargo.toml in the workspace root.
+#
+# Finally note that *any* usage of `artifact = ...` in *any* Cargo.toml in the workspace breaks
+# workflows with stable cargo; stable cargo outright refuses to load manifests that use unstable
+# features.
+ingress-ebpf = { path = "../ingress-ebpf" }
 
-[profile.release.package.ingress-ebpf]
-debug = 2
-codegen-units = 1
+[[bin]]
+name = "ingress"
+path = "src/main.rs"

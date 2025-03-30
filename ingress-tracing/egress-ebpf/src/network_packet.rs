@@ -8,7 +8,7 @@ use network_types::{
 };
 
 
-#[inline(always)] // 
+#[inline(always)]
 fn ptr_at<T>(ctx: &TcContext, offset: usize) -> Result<*const T, ()> {
     let start = ctx.data();
     let end = ctx.data_end();
