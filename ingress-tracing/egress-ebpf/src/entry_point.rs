@@ -3,8 +3,7 @@ use aya_ebpf::{
     maps::PerCpuArray,
 };
 use aya_log_ebpf::info;
-use crate::network_packet::NetworkPacket;
-use crate::filters::port_filter;
+use kernel::network_packet::NetworkPacket;
 
 
 // #define TC_ACT_SHOT 2  // drop
@@ -19,11 +18,6 @@ pub fn ingress_entry_point(ctx: TcContext, map: &mut PerCpuArray<u32>) -> Result
         Ok(outcome) => outcome,
         Err(_) => return Ok(RETURN_CODE)
     };
-
-    // This needs to be a filter if it's an ingress
-    // if port_filter(&5000, &10000, &packet.dest_port) == false {
-    //     return Ok(RETURN_CODE)
-    // }
 
     // Log IP and port
     info!(

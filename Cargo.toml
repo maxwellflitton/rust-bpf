@@ -8,7 +8,8 @@ members = [
     "test-tcp-client",
     "ingress-tracing/ingress",
     "ingress-tracing/kernel",
-    "ingress-tracing/ingress-ebpf"
+    "ingress-tracing/ingress-ebpf",
+    "ingress-tracing/egress-ebpf"
 ]
 
 [workspace.dependencies]

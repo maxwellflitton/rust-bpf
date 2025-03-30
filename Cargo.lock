@@ -300,6 +300,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "egress-ebpf"
+version = "0.1.0"
+dependencies = [
+ "aya-ebpf",
+ "aya-log-ebpf",
+ "kernel",
+ "network-types",
+ "which",
+]
+
+[[package]]
 name = "either"
 version = "1.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -397,6 +408,7 @@ dependencies = [
  "aya-build",
  "aya-log",
  "clap",
+ "egress-ebpf",
  "env_logger",
  "ingress-ebpf",
  "kernel",
@@ -427,6 +439,8 @@ name = "kernel"
 version = "0.1.0"
 dependencies = [
  "aya",
+ "aya-ebpf",
+ "network-types",
 ]
 
 [[package]]

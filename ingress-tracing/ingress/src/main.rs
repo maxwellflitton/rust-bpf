@@ -30,24 +30,7 @@ impl ProgramType {
     }
 }
 
-macro_rules! define_program_path {
-    (INGRESS) => {
-        "/ingress"
-    };
-    (EGRESS) => {
-        "/egress"
-    };
-}
-
 fn load_program(opt: &Opt, program_type: ProgramType, mut ebpf: Ebpf) -> anyhow::Result<Ebpf> {
-    // This will include your eBPF object file as raw bytes at compile-time and load it at
-    // runtime. This approach is recommended for most real-world use cases. If you would
-    // like to specify the eBPF program at runtime rather than at compile-time, you can
-    // reach for `Bpf::load_file` instead.
-    // let mut ebpf = aya::Ebpf::load(aya::include_bytes_aligned!(concat!(
-    //     env!("OUT_DIR"),
-    //     "/ingress"
-    // )))?;
     if let Err(e) = aya_log::EbpfLogger::init(&mut ebpf) {
         // This can happen if you remove all log statements from your eBPF program.
         warn!("failed to initialize eBPF logger: {}", e);
@@ -58,8 +41,7 @@ fn load_program(opt: &Opt, program_type: ProgramType, mut ebpf: Ebpf) -> anyhow:
     // error adding clsact to the interface if it is already added is harmless
     // the full cleanup can be done with 'sudo tc qdisc del dev eth0 clsact'.
     let _ = tc::qdisc_add_clsact(&iface);
-    let ingress_program: &mut SchedClassifier = ebpf.program_mut(program_type.to_str()).unwrap().try_into()?;
-    // let ingress_program: &mut SchedClassifier = ebpf.program_mut(&program_type.to_string()).unwrap().try_into()?;
+    let ingress_program: &mut SchedClassifier = ebpf.program_mut("ingress").unwrap().try_into()?;
     ingress_program.load()?;
     ingress_program.attach(&iface, program_type.to_attachment_type())?;  // for egress use TcAttachType::Egress 
     Ok(ebpf)
@@ -83,11 +65,11 @@ async fn main() -> anyhow::Result<()> {
     }
 
     // if dropped the programs will cease to run in kernel space
-    let mut ingress = aya::Ebpf::load(aya::include_bytes_aligned!(concat!(
+    let ingress = aya::Ebpf::load(aya::include_bytes_aligned!(concat!(
         env!("OUT_DIR"),
         "/ingress"
     )))?;
-    let mut egress = aya::Ebpf::load(aya::include_bytes_aligned!(concat!(
+    let egress = aya::Ebpf::load(aya::include_bytes_aligned!(concat!(
         env!("OUT_DIR"),
         "/egress"
     )))?;
