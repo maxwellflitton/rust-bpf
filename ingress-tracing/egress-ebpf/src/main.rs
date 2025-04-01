@@ -4,15 +4,9 @@
 mod entry_point;
 mod filters;
 use aya_ebpf::{
-    macros::{classifier, map}, 
+    macros::classifier, 
     programs::TcContext,
-    maps::PerCpuArray,
 };
-
-const CPU_CORES: u32 = 16;
-
-#[map(name="PKT_CNT_ARRAY")]
-static mut PACKET_COUNTER: PerCpuArray<u32> = PerCpuArray::with_max_entries(CPU_CORES , 0);
 
 // #define TC_ACT_SHOT 2  // drop
 // #define TC_ACT_OK   0  // *not* drop, but NO redirection or continuation
@@ -20,11 +14,9 @@ static mut PACKET_COUNTER: PerCpuArray<u32> = PerCpuArray::with_max_entries(CPU_
 
 #[classifier]
 pub fn ingress(ctx: TcContext) -> i32 {
-    unsafe {
-        match entry_point::ingress_entry_point(ctx, &mut PACKET_COUNTER) {
-            Ok(ret) => ret.try_into().unwrap(),
-            Err(_) => 1,
-        }
+    match entry_point::egress_entry_point(ctx) {
+        Ok(ret) => ret.try_into().unwrap(),
+        Err(_) => 1,
     }
 }
 

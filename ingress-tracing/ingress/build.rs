@@ -15,6 +15,11 @@ fn build(package_name: &str) -> anyhow::Result<()> {
 }
 
 fn main() -> anyhow::Result<()> {
+
+    // 🟡 This tells Cargo to re-run this script if the environment changes.
+    println!("cargo:rerun-if-env-changed=LOWERBOUND_PORT");
+    println!("cargo:rerun-if-env-changed=UPPERBOUND_PORT");
+
     let _ = build("ingress-ebpf");
     let _ = build("egress-ebpf");
     Ok(())

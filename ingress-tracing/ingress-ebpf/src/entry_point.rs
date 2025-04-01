@@ -25,12 +25,12 @@ pub fn ingress_entry_point(ctx: TcContext, map: &mut PerCpuArray<u32>) -> Result
     }
 
     // Log IP and port
-    info!(
-        &ctx, 
-        "SRC IP: {:i}, SRC PORT: {}, DEST PORT: {}", 
-        packet.source_addr, 
-        packet.source_port, 
-        packet.dest_port
-    );
+    // info!(
+    //     &ctx, 
+    //     "SRC IP: {:i}, SRC PORT: {}, DEST PORT: {}", 
+    //     packet.source_addr, 
+    //     packet.source_port, 
+    //     packet.dest_port
+    // );
     Ok(RETURN_CODE) // Let the packet go through
 }

@@ -3,7 +3,12 @@ use clap::Parser;
 #[rustfmt::skip]
 use log::{debug, warn};
 use tokio::signal;
-pub mod mapping;
+mod mapping;
+use crate::mapping::{
+    get_and_wipe_egress_count, 
+    get_and_wipe_ingress_count
+};
+use kernel::counters::{UPPERBOUND_PORT, LOWERBOUND_PORT};
 
 #[derive(Debug, Parser)]
 struct Opt {
@@ -59,6 +64,9 @@ async fn main() -> anyhow::Result<()> {
         debug!("remove limit on locked memory failed, ret is: {}", ret);
     }
 
+    println!("upper bound: {}", UPPERBOUND_PORT);
+    println!("lower bound: {}", LOWERBOUND_PORT);
+
     // if dropped the programs will cease to run in kernel space
     let ingress = aya::Ebpf::load(aya::include_bytes_aligned!(concat!(
         env!("OUT_DIR"),
@@ -68,13 +76,19 @@ async fn main() -> anyhow::Result<()> {
         env!("OUT_DIR"),
         "/egress"
     )))?;
-    let _egress = load_program(&opt, ProgramType::Egress, egress)?;
-    let _ingress = load_program(&opt, ProgramType::Ingress, ingress)?;
+    let mut egress = load_program(&opt, ProgramType::Egress, egress)?;
+    let mut ingress = load_program(&opt, ProgramType::Ingress, ingress)?;
 
-    let ctrl_c = signal::ctrl_c();
-    println!("Waiting for Ctrl-C...");
-    ctrl_c.await?;
-    println!("Exiting...");
+    loop {
+        let count = get_and_wipe_egress_count(443, &mut egress);
+        println!("{:?}", count);
+        std::thread::sleep(std::time::Duration::from_secs(1));
+    }
 
-    Ok(())
+    // let ctrl_c = signal::ctrl_c();
+    // println!("Waiting for Ctrl-C...");
+    // ctrl_c.await?;
+    // println!("Exiting...");
+
+    // Ok(())
 }

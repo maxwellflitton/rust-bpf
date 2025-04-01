@@ -58,6 +58,16 @@ impl NetworkPacket {
         Ok(NetworkPacket { source_port, dest_port, source_addr })
     }
 
+    pub fn drop_return_status() -> u32 {
+        2
+    }
+    pub fn consume_return_status() -> u32 {
+        0
+    }
+    pub fn pass_through_return_status() -> u32 {
+        3
+    }
+
 }
 
 

@@ -4,39 +4,18 @@ use aya::maps::PerCpuValues;
 use aya::Ebpf;
 
 
-pub fn get_and_wipe_ingress_count(port: u16, epbf: &mut Ebpf) -> Option<u32> {
-    let index = port as u32 - LOWERBOUND_PORT;
-    unsafe {
-        let array = PerCpuArray::try_from(ebpf.map_mut("PKT_CNT_ARRAY").unwrap())?;
-        if let Some(counter) = INGRESS_PORT_COUNTERS.get_ptr_mut(index) {
-            let placeholder = *counter;
-            *counter = 0;
-            Some(placeholder)
-        }
-        else {
-            None
-        }
-    }
+pub fn get_and_wipe_ingress_count(port: u16, epbf: &mut Ebpf) -> Result<Option<u32>, String> {
+    get_and_wipe_count(port, "EGRESS_PORT_COUNTERS", epbf)
 }
 
 
-pub fn get_and_wipe_egress_count(port: u16, epbf: &mut Ebpf) -> Option<u32> {
-    let index = port as u32 - LOWERBOUND_PORT;
-    unsafe {
-        if let Some(counter) = EGRESS_PORT_COUNTERS.get_ptr_mut(index) {
-            let placeholder = *counter;
-            *counter = 0;
-            Some(placeholder)
-        }
-        else {
-            None
-        }
-    }
+pub fn get_and_wipe_egress_count(port: u16, epbf: &mut Ebpf) -> Result<Option<u32>, String> {
+    get_and_wipe_count(port, "EGRESS_PORT_COUNTERS", epbf)
 }
 
-fn get_and_wipe_count(port: u16, map_name: &str, ebpf: &mut Ebpf) -> Result<Option<u32>, String> {
+fn get_and_wipe_count(port: u16, map_name: &str, epbf: &mut Ebpf) -> Result<Option<u32>, String> {
     let index = port as u32 - LOWERBOUND_PORT;
-    let map = match ebpf.map_mut(map_name) {
+    let map = match epbf.map_mut(map_name) {
         None => return Ok(None),
         Some(map) => map
     };
