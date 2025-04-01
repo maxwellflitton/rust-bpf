@@ -9,7 +9,8 @@ members = [
     "ingress-tracing/ingress",
     "ingress-tracing/kernel",
     "ingress-tracing/ingress-ebpf",
-    "ingress-tracing/egress-ebpf"
+    "ingress-tracing/egress-ebpf", 
+    "ingress-tracing/define_bounds_macro"
 ]
 
 [workspace.dependencies]

@@ -3,6 +3,7 @@ use clap::Parser;
 #[rustfmt::skip]
 use log::{debug, warn};
 use tokio::signal;
+pub mod mapping;
 
 #[derive(Debug, Parser)]
 struct Opt {
@@ -20,12 +21,6 @@ impl ProgramType {
         match self {
             ProgramType::Egress => TcAttachType::Egress,
             ProgramType::Ingress => TcAttachType::Ingress
-        }
-    }
-    pub fn to_str(&self) -> &str {
-        match self {
-            ProgramType::Egress => "egress",
-            ProgramType::Ingress => "ingress"
         }
     }
 }

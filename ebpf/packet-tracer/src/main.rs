@@ -53,6 +53,7 @@ async fn main() -> anyhow::Result<()> {
 
     // let array = PerCpuArray::try_from("PKT_CNT_ARRAY").unwrap();
     let array = PerCpuArray::try_from(ebpf.map_mut("PKT_CNT_ARRAY").unwrap())?;
+    let test = ebpf.map_mut("PKT_CNT_ARRAY");
 
     loop {
         let cc: PerCpuValues<u32> = array.get(&0, 0)?;

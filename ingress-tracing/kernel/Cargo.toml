@@ -11,6 +11,7 @@ user = ["aya"]
 aya = { workspace = true, optional = true }
 network-types = "0.0.7"
 aya-ebpf = { workspace = true }
+define_bounds_macro = { path = "../define_bounds_macro" }
 
 [lib]
 path = "src/lib.rs"

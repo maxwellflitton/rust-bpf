@@ -300,6 +300,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "define_bounds_macro"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "egress-ebpf"
 version = "0.1.0"
 dependencies = [
@@ -440,6 +449,7 @@ version = "0.1.0"
 dependencies = [
  "aya",
  "aya-ebpf",
+ "define_bounds_macro",
  "network-types",
 ]
 
